@@ -12,9 +12,9 @@ while (true)
 {
     var client = listener.AcceptTcpClient();
 
-    //For each incoming connection, create a new thread to handle the request.
-    var clientThread = new Thread(() => HandleClient(client));
-    clientThread.Start();
+    //For each incoming connection, use threadpool to handle the request.
+    //Handling multiple concurrent connections efficiently.
+    ThreadPool.QueueUserWorkItem(_ => HandleClient(client));
 }
 
 //Handle Client Connections (Using Threads)
