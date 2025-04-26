@@ -33,11 +33,15 @@ static void HandleClient(TcpClient client)
         // Log the client request to a file
         LogRequest(client, requestLine);
 
+        if (string.IsNullOrEmpty(requestLine))
+        {
+            return;
+        }
+
         //parsing the request line
         var tokens = requestLine.Split(' ');
-
-        //if token length is less then 2 it means that  Request is broken or invalid.
-        if (string.IsNullOrEmpty(requestLine) || tokens.Length < 2)
+        //if token length is less then 2 it means that  Request is broken or invalid
+        if (tokens.Length < 2)
         {
             return;
         }
