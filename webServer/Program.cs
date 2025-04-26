@@ -30,6 +30,9 @@ static void HandleClient(TcpClient client)
         string requestLine = reader.ReadLine();
         Console.WriteLine($"Request header{requestLine}");
 
+        // Log the client request to a file
+        LogRequest(client, requestLine);
+
         //parsing the request line
         var tokens = requestLine.Split(' ');
 
@@ -132,4 +135,15 @@ static string GetContentType(string extension)
         ".js" => "application/javascript",
         _ => "application/octet-stream"
     };
+}
+
+//helper for Logging client requests to a file.
+static void LogRequest(TcpClient client, string requestLine)
+{
+    string logFilePath = "server_log.txt"; 
+    string clientIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString(); 
+    string timeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+    string logEntry = $"{timeStamp} - {clientIP} - {requestLine}";
+    File.AppendAllText(logFilePath, logEntry + Environment.NewLine);
 }
