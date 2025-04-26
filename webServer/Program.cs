@@ -6,7 +6,13 @@ using System.Net.Sockets;
 var listener = new TcpListener(IPAddress.Any, 8080);
 listener.Start();
 
-//accepting incoming client connections 
-var client = listener.AcceptTcpClient();
-var stream = client.GetStream();
+//accepting incoming client connections always
+
+while (true)
+{
+    var client = listener.AcceptTcpClient();
+    var stream = client.GetStream();
+
+    client.Close();
+}
 
