@@ -50,7 +50,7 @@ static void HandleClient(TcpClient client)
         {
             var status = "405 Method Not Allowed";
             var contentType = "text/html";
-            var body = "<html><body><h1>405 Method Not Allowed</h1></body></html>";
+            var body = LoadErrorPage();
             SendResponse(writer, status, contentType, body);
             return;
         }
@@ -68,7 +68,7 @@ static void HandleClient(TcpClient client)
         {
             var status = "403 Forbidden";
             var contentType = "text/html";
-            var body = "<html><body><h1>403 Forbidden</h1></body></html>";
+            var body = LoadErrorPage();
             SendResponse(writer, status, contentType, body);
             return;
         }
@@ -97,7 +97,7 @@ static void HandleClient(TcpClient client)
         {
             var status = "404 Not Found";
             var contentType = "text/html";
-            var body = "<html><body><h1>404 Not Found</h1></body></html>";
+            var body = LoadErrorPage();
             SendResponse(writer, status, contentType, body);
             return;
         }
@@ -153,4 +153,15 @@ static void LogRequest(TcpClient client, string requestLine)
 
     string logEntry = $"{timeStamp} - {clientIP} - {requestLine}";
     File.AppendAllText(logFilePath, logEntry + Environment.NewLine);
+}
+
+//helper for Serving a custom error page from error.html instead of an inline error message.
+static string LoadErrorPage()
+{
+    string errorPagePath = Path.Combine("webroot", "error.html");
+    if (File.Exists(errorPagePath))
+    {
+        return File.ReadAllText(errorPagePath);
+    }
+    return "<html><body><h1>Error occurred</h1></body></html>";
 }
