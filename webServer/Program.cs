@@ -126,16 +126,23 @@ static void SendResponse(StreamWriter writer, string status, string contentType,
 }
 
 // Helper to detect content type based on extension
+//Supporting MIME types for correct content delivery (Content-Type: text/css, etc.).
 static string GetContentType(string extension)
 {
-    return extension switch
+    return extension.ToLower() switch
     {
         ".html" => "text/html",
         ".css" => "text/css",
         ".js" => "application/javascript",
-        _ => "application/octet-stream"
+        ".json" => "application/json",
+        ".png" => "image/png",
+        ".jpg" => "image/jpeg",
+        ".gif" => "image/gif",
+        ".svg" => "image/svg+xml",
+        _ => "application/octet-stream" 
     };
 }
+
 
 //helper for Logging client requests to a file.
 static void LogRequest(TcpClient client, string requestLine)
