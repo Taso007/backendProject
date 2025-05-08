@@ -12,7 +12,6 @@
     <None Remove="webroot\error.html" />
     <None Remove="webroot\index.html" />
     <None Remove="webroot\script.js" />
-    <None Remove="webroot\styles.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,12 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Include="webroot\styles.css" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="server_log.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="webroot\styles.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
