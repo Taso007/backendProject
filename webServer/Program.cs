@@ -24,7 +24,7 @@ static void HandleClient(TcpClient client)
     {
         var stream = client.GetStream();
         var reader = new StreamReader(stream, Encoding.UTF8);
-        var writer = new StreamWriter(stream, Encoding.UTF8) { AutoFlush = true };
+        var writer = new StreamWriter(stream, new UTF8Encoding(false)) { AutoFlush = true };
 
         //Read the request line, first line is the header
         string requestLine = reader.ReadLine();
