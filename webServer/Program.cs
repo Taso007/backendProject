@@ -151,12 +151,14 @@ static string GetContentType(string extension)
 //helper for Logging client requests to a file.
 static void LogRequest(TcpClient client, string requestLine)
 {
-    string logFilePath = "server_log.txt"; 
+    string logFilePath = Path.Combine(Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName, "server_log.txt");
+    Console.WriteLine(logFilePath);
     string clientIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString(); 
     string timeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
     string logEntry = $"{timeStamp} - {clientIP} - {requestLine}";
     File.AppendAllText(logFilePath, logEntry + Environment.NewLine);
+    Console.WriteLine($"Logging request: {logEntry}");
 }
 
 //helper for Serving a custom error page from error.html instead of an inline error message.

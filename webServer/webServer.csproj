@@ -34,4 +34,10 @@
     <Page Include="webroot\styles.css" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="server_log.txt">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
